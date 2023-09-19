@@ -5,15 +5,19 @@ import { Product, FooterBanner, HeroBanner } from "../components";
 const Home = ({ products, bannerData }) => {
 	const [userCountry, setUserCountry] = useState("");
 	useEffect(() => {
-		fetch("https://ipapi.co/json/", { mode: "no-cors" })
-			.then(function (response) {
-				response.json().then((jsonData) => {
-					console.log(jsonData);
-					setUserCountry(jsonData.country_name);
-				});
-			})
-			.catch(function (error) {
-				console.log(error);
+		fetch("/api/getUserIP")
+			.then((response) => response.json())
+			.then((data) => {
+				fetch(`https://ipapi.co/${data.ip}/json/`)
+					.then(function (response) {
+						response.json().then((jsonData) => {
+							console.log(jsonData);
+							setUserCountry(jsonData.country_name);
+						});
+					})
+					.catch(function (error) {
+						console.log(error);
+					});
 			});
 	}, []);
 	console.log(userCountry);
