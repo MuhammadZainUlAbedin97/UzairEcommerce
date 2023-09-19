@@ -5,7 +5,7 @@ import { Product, FooterBanner, HeroBanner } from "../components";
 const Home = ({ products, bannerData }) => {
 	const [userCountry, setUserCountry] = useState("");
 	useEffect(() => {
-		fetch("https://ipapi.co/json/")
+		fetch("https://ipapi.co/json/", { mode: "same-origin" })
 			.then(function (response) {
 				response.json().then((jsonData) => {
 					console.log(jsonData);
